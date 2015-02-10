@@ -1,3 +1,11 @@
+using EstudoDDD.Aplicacao;
+using EstudoDDD.Aplicacao.Interfaces;
+using EstudoDDD.Dominio;
+using EstudoDDD.Dominio.Interfaces.Repositorios;
+using EstudoDDD.Dominio.Interfaces.Servicos;
+using EstudoDDD.Dominio.Servicos;
+using EstudoDDD.Infra.Dados.Repositorios;
+
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(EstudoDDD.Mvc.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(EstudoDDD.Mvc.App_Start.NinjectWebCommon), "Stop")]
 
@@ -61,6 +69,14 @@ namespace EstudoDDD.Mvc.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
+            kernel.Bind(typeof (IAppServicoBase<>)).To(typeof (AppServicoBase<>));
+            kernel.Bind<IProdutoAppServico>().To<ProdutoAppServico>();
+
+            kernel.Bind(typeof (IServicoBase<>)).To(typeof (ServicoBase<>));
+            kernel.Bind<IProdutoServico>().To<ProdutoServico>();
+
+            kernel.Bind(typeof (IRepositorioBase<>)).To(typeof (RepositorioBase<>));
+            kernel.Bind<IProdutoRepositorio>().To<ProdutoRepositorio>();
         }        
     }
 }
